@@ -1,6 +1,7 @@
-#include <SDL2/SDL.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
 #include <iostream>
-
+    
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 
@@ -31,6 +32,7 @@ void drawTicks(SDL_Renderer* renderer){
     }
 }
 
+
 int main(int argc, char* argv[]){
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
         std::cerr << "SDL Initialization Error: " << SDL_GetError() << std::endl;
@@ -59,6 +61,8 @@ int main(int argc, char* argv[]){
         return 1;
     }
 
+   
+
     // Main Loop
     bool running = true;
     SDL_Event event;
@@ -75,9 +79,11 @@ int main(int argc, char* argv[]){
         drawAxis(renderer);
         drawTicks(renderer);
 
-
         SDL_RenderPresent(renderer);
     }
+
+
+
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

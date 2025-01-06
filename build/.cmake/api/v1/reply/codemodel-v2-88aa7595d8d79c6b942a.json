@@ -9,7 +9,7 @@
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.10"
+						"string" : "3.16"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "GraphingCalculator::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-GraphingCalculator-Debug-bc7b64a2d2709b090d59.json",
+					"jsonFile" : "target-GraphingCalculator-Debug-3df30b276e99592fbd40.json",
 					"name" : "GraphingCalculator",
 					"projectIndex" : 0
 				}
