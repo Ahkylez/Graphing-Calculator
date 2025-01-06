@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/isaiccruse/Documents/repos/graphingCalculator/build",
+  "command": "/usr/bin/clang++ -I/opt/homebrew/Cellar/sdl2/2.30.11/include -isystem /opt/homebrew/Cellar/sdl2/2.30.11/include/SDL2 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.1.sdk -o CMakeFiles/GraphingCalculator.dir/src/main.cpp.o -c /Users/isaiccruse/Documents/repos/graphingCalculator/src/main.cpp",
+  "file": "/Users/isaiccruse/Documents/repos/graphingCalculator/src/main.cpp",
+  "output": "CMakeFiles/GraphingCalculator.dir/src/main.cpp.o"
+}
+]
