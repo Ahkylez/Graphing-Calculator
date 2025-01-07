@@ -5,33 +5,61 @@
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 
-const int TICK_SPACING = 50;
-const int TICK_SIZE = 10;
+float scale = 50;
+float offsetX = WINDOW_WIDTH/2;
+float offsetY = WINDOW_HEIGHT/2;
 
-void drawAxis(SDL_Renderer* renderer){
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+void drawGrid(SDL_Renderer* renderer, int width, int height, float scale, float offsetX, float offsetY){
+    
+    SDL_SetRenderDrawColor(renderer, 64, 64, 64, 255);
+    // Draw x lines (Vertical)
+    for (int x = -offsetX; x < width; x += scale){
+        // clean up this logic later
+        // if (x % 8 == 0){
+        //     SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
+        //     SDL_RenderDrawLine(renderer, x + offsetX, 0, x + offsetX, height);
+        //     SDL_SetRenderDrawColor(renderer, 64, 64, 64, 255);
+        // }
+        // else {
+        //     SDL_RenderDrawLine(renderer, x + offsetX, 0, x + offsetX, height);
+        // }
+        SDL_RenderDrawLine(renderer, x + offsetX, 0, x + offsetX, height);
+        
+    }
 
-        // Draw X axis
-        SDL_RenderDrawLine(renderer, 0, WINDOW_HEIGHT/2, WINDOW_WIDTH, WINDOW_HEIGHT/2);
+    // Draw y lines (horizontal)
+    for (int y = -offsetY; y < height; y += scale){
+        // if (y % 8 == 0){
+        //     SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
+        //     SDL_RenderDrawLine(renderer, 0, y + offsetY, width, y + offsetY);
+        //     SDL_SetRenderDrawColor(renderer, 64, 64, 64, 255);
+        // }
+        // else {
+        //     SDL_RenderDrawLine(renderer, 0, y + offsetY, width, y + offsetY);
+        // }
+        SDL_RenderDrawLine(renderer, 0, y + offsetY, width, y + offsetY);
+    }
 
-        // Draw Y axis
-        SDL_RenderDrawLine(renderer, WINDOW_WIDTH/2, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT);
-}
-
-void drawTicks(SDL_Renderer* renderer){
+    // Draw x-axis
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderDrawLine(renderer, 0, offsetY, width, offsetY);
 
-    // Draw ticks along the X-axis
-    for (int x = 0; x <= WINDOW_WIDTH; x += TICK_SPACING) {
-        SDL_RenderDrawLine(renderer, x, WINDOW_HEIGHT / 2 - TICK_SIZE / 2, x, WINDOW_HEIGHT / 2 + TICK_SIZE / 2);
-    }
-
-    // Draw ticks along the Y-axis
-    for (int y = 0; y <= WINDOW_HEIGHT; y += TICK_SPACING) {
-        SDL_RenderDrawLine(renderer, WINDOW_WIDTH / 2 - TICK_SIZE / 2, y, WINDOW_WIDTH / 2 + TICK_SIZE / 2, y);
-    }
+    // Draw y-axis
+    SDL_RenderDrawLine(renderer, offsetX, 0, offsetX, height);
 }
 
+void handleInput(SDL_Event& event, float& scale, float& offsetX, float& offsetY) {
+    if (event.type == SDL_MOUSEWHEEL) {
+        if (event.wheel.y > 0) { // Zoom in
+            scale *= 1.1f;
+        } else if (event.wheel.y < 0) { // Zoom out
+            scale *= 0.9f;
+        }
+    } else if (event.type == SDL_MOUSEMOTION && (event.motion.state & SDL_BUTTON_LMASK)) {
+        offsetX += event.motion.xrel;
+        offsetY += event.motion.yrel;
+    }
+}
 
 int main(int argc, char* argv[]){
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
@@ -71,14 +99,15 @@ int main(int argc, char* argv[]){
             if (event.type == SDL_QUIT) {
                 running = false;
             }
+            handleInput(event, scale, offsetX, offsetY);
         }
+
+
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
+        drawGrid(renderer, WINDOW_WIDTH, WINDOW_HEIGHT, scale, offsetX, offsetY);
         
-        drawAxis(renderer);
-        drawTicks(renderer);
-
         SDL_RenderPresent(renderer);
     }
 
